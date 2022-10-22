@@ -3,15 +3,16 @@ const inquirer= require('inquirer');
 const path= require('path');
 const fs= require('fs');
 const generateMarkdown= require('./utils/generateMarkdown');
-const questions= [
+inquirer.prompt ([
+    
     {
         type: 'input',
-        message: 'What is the title of your page?',
+        message: 'What is the title of your project?',
         name: 'title',
     },
     {
         type: 'input',
-        message: 'What is the description of the page?',
+        message: 'What is the description of the project?',
         name: 'description',
     },
     {
@@ -35,14 +36,12 @@ const questions= [
         message: 'What is your Github URL?',
         name: 'Github',
     },
-]
+])
+.then((data)=>{
+    init(data);
+})
 
-// TODO: Create a function to write README file
-//look up fs.writeFilesSync and path.join and process.cwd and spread Operator "..."
-function writeToFile(fileName, data) {}
-//set up path by using fileName and data as placeholder
-// TODO: Create a function to initialize app
-function init() {}
-//callback => to writeToFile (replace fileName and data)
-// Function call to initialize app
-init();
+function init(data) {
+    console.log("calling init function");
+    fs.writeFileSync('README.md', generateMarkdown(data));
+}
